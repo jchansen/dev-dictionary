@@ -8,7 +8,7 @@ class AddTerm extends Component {
 
   createTerm = () => {
     // POST the term to the server.
-  }
+  };
 
   render() {
     const { hide } = this.props;

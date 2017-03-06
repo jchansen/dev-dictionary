@@ -29,7 +29,7 @@ class AddDefinition extends Component {
 
   createDefinition = () => {
     // POST the definition to the server.
-  }
+  };
 
   selectWho = user => this.setState({ who: user });
 

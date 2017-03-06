@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 class Navigation extends Component {
   static contextTypes = {
     loggedInUser: React.PropTypes.object,
-  }
+  };
 
   render() {
     const { loggedInUser } = this.context;
