@@ -6,12 +6,32 @@ class AddTerm extends Component {
     hide: React.PropTypes.func.isRequired,
   };
 
+  static contextTypes = {
+    loggedInUser: React.PropTypes.object.isRequired
+  };
+
+  state = {
+    name: ''
+  };
+
   createTerm = () => {
-    // POST the term to the server.
+    const { loggedInUser } = this.context;
+    lore.actions.term.create({
+      name: this.state.name,
+      userId: loggedInUser.id
+    });
+    this.props.hide();
+  };
+
+  onChange = (event) => {
+    this.setState({
+      name: event.target.value
+    });
   };
 
   render() {
     const { hide } = this.props;
+    const { name } = this.state;
 
     return (
       <Well className="add-term">
@@ -21,13 +41,17 @@ class AddTerm extends Component {
               Term
             </Col>
             <Col sm={10}>
-              <FormControl />
+              <FormControl
+                componentClass="textarea"
+                placeholder="Add your term"
+                value={name}
+                onChange={this.onChange} />
             </Col>
           </FormGroup>
 
           <FormGroup>
             <Col smOffset={2} sm={10}>
-              <Button bsStyle="primary" type="submit" onClick={this.createTerm}>
+              <Button bsStyle="primary" onClick={this.createTerm}>
                 Submit the term
               </Button>
               <Button bsStyle="link" onClick={hide}>Cancel</Button>

@@ -1,14 +1,29 @@
 import React, { Component } from 'react';
 import { Button, Col, ControlLabel, Form, FormControl, FormGroup, HelpBlock, Image, Well } from 'react-bootstrap';
 import Select from 'react-select';
-import jsonData from '../../db.json';
 import 'react-select/dist/react-select.css';
 
 // TODO: Fetch list of users from server via API.
-const options = jsonData.users;
+const options = [
+  {
+    "id": 1,
+    "name": "Alice",
+    "avatarUrl": "/assets/avatars/alice.png"
+  },
+  {
+    "id": 2,
+    "name": "Dilbert",
+    "avatarUrl": "/assets/avatars/dilbert.png"
+  },
+  {
+    "id": 3,
+    "name": "Wally",
+    "avatarUrl": "/assets/avatars/wally.png"
+  }
+];
 
 const userComponent = props => {
-  const value = props.value ? props.value : props.option
+  const value = props.value ? props.value : props.option;
   return (
     <div className="user-select-component" onClick={() => props.onSelect(value)}>
       <Image className="nav-avatar" src={'/avatars/' + value.avatarUrl} />
@@ -21,21 +36,38 @@ const userComponent = props => {
 class AddDefinition extends Component {
   static propTypes = {
     hide: React.PropTypes.func.isRequired,
+    term: React.PropTypes.object.isRequired
   };
 
   state = {
     who: null,
+    definition: null,
   };
 
-  createDefinition = () => {
-    // POST the definition to the server.
+  createDefinition = (e) => {
+    // e.preventDefault();
+    // e.stopPropagation();
+    lore.actions.definition.create({
+      content: this.state.definition,
+      termId: this.props.term.id,
+      userId: this.state.who.id
+    });
+    this.props.hide();
   };
 
-  selectWho = user => this.setState({ who: user });
+  selectWho = user => this.setState({
+    who: user
+  });
+
+  changeDefinition = (event) => {
+    this.setState({
+      definition: event.target.value
+    });
+  };
 
   render() {
     const { hide } = this.props;
-    const { who } = this.state;
+    const { who, definition } = this.state;
 
     return (
       <Well className="add-term">
@@ -45,7 +77,11 @@ class AddDefinition extends Component {
               Definition
             </Col>
             <Col sm={10}>
-              <FormControl componentClass="textarea" placeholder="Add your definition"/>
+              <FormControl
+                componentClass="textarea"
+                placeholder="Add your definition"
+                value={definition}
+                onChange={this.changeDefinition} />
             </Col>
           </FormGroup>
 
@@ -62,16 +98,20 @@ class AddDefinition extends Component {
                 value={who}
                 valueComponent={userComponent}
               />
-              <HelpBlock>If you heard someone provide this definition, you can credit it to them. Otherwise, choose yourself.</HelpBlock>
+              <HelpBlock>
+                If you heard someone provide this definition, you can credit it to them. Otherwise, choose yourself.
+              </HelpBlock>
             </Col>
           </FormGroup>
 
           <FormGroup>
             <Col smOffset={2} sm={10}>
-              <Button bsStyle="primary" type="submit" onClick={this.createDefinition}>
+              <Button bsStyle="primary" onClick={this.createDefinition}>
                 Submit the definition
               </Button>
-              <Button bsStyle="link" onClick={hide}>Cancel</Button>
+              <Button bsStyle="link" onClick={hide}>
+                Cancel
+              </Button>
             </Col>
           </FormGroup>
         </Form>

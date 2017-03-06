@@ -33,7 +33,7 @@ class Login extends Component {
 
   renderUser(user) {
     return (
-      <div key={user.id} className="user">
+      <div key={user.id || user.cid} className="user">
         <Image src={user.data.avatarUrl} />
         {' '}
         <strong>{user.data.name}</strong>

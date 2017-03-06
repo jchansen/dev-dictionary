@@ -31,7 +31,7 @@ class Term extends Component {
   renderDefinition(definition, index) {
     return (
       <Definition
-        key={definition.id}
+        key={definition.id || definition.cid}
         definition={definition}
         index={index + 1} />
     );
@@ -68,7 +68,9 @@ class Term extends Component {
           <Button bsStyle="info" bsSize="xsmall" onClick={this.toggleAdd}>
             <Glyphicon glyph="plus-sign" /> Add definition
           </Button>
-          {showAddDefinition && <AddDefinition hide={this.toggleAdd} />}
+          {showAddDefinition && (
+            <AddDefinition hide={this.toggleAdd} term={term} />
+          )}
         </div>
       </div>
     );

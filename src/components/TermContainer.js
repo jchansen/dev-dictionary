@@ -43,8 +43,12 @@ class TermContainer extends Component {
         <Link to="/terms">
           <Glyphicon glyph="chevron-left" /> Back to terms
         </Link>
-        <h1>{term.data.name}</h1>
-        <Term key={term.id} term={term} />
+        <h1>
+          {term.data.name}
+        </h1>
+        <Term
+          key={term.id || term.cid}
+          term={term} />
       </div>
     );
   }

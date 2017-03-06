@@ -25,7 +25,7 @@ class Dictionary extends Component {
 
   renderTerm(term) {
     return (
-      <Term key={term.id} term={term} />
+      <Term key={term.id || term.cid} term={term} />
     );
   }
 
