@@ -11,8 +11,12 @@ class Definition extends Component {
 
     return (
       <div className="definition">
-        <div className="definition-index">{index}.</div>
-        <div className="definition-content">{definition.content}</div>
+        <div className="definition-index">
+          {index}.
+        </div>
+        <div className="definition-content">
+          {definition.data.content}
+        </div>
       </div>
     );
   }

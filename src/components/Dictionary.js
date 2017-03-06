@@ -2,27 +2,47 @@ import React, { Component } from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
 import Term from './Term';
 import AddTerm from './AddTerm';
-import jsonData from '../../db.json';
-import filter from 'lodash/filter'
+import PayloadStates from '../constants/PayloadStates';
 
-// Don't do this. You need to actually fetch the data from the server using
-// the API. This is a cheater way just to provide a visual example of what you
-// should see when you're done.
-const terms = jsonData.terms.map(term => ({
-  ...term,
-  definitions: filter(jsonData.definitions, { termId: term.id })
-}))
-
-
+@lore.connect(function(getState, props) {
+  return {
+    terms: getState('term.find')
+  }
+})
 class Dictionary extends Component {
+
+  static propTypes = {
+    terms: React.PropTypes.object.isRequired
+  };
+
   state = {
     showAddTerm: false
   };
 
-  toggleAdd = () => this.setState({ showAddTerm: !this.state.showAddTerm })
+  toggleAdd = () => this.setState({
+    showAddTerm: !this.state.showAddTerm
+  });
+
+  renderTerm(term) {
+    return (
+      <Term key={term.id} term={term} />
+    );
+  }
 
   render() {
     const { showAddTerm } = this.state;
+    const { terms } = this.props;
+
+    if (terms.state === PayloadStates.FETCHING) {
+      return (
+        <div>
+          <h2>Terms</h2>
+          <div className="terms">
+            Fetching terms...
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -32,9 +52,7 @@ class Dictionary extends Component {
         </Button>
         {showAddTerm && <AddTerm hide={this.toggleAdd} />}
         <div className="terms">
-          {terms.map(term => {
-            return <Term key={term.id} term={term} />;
-          })}
+          {terms.data.map(this.renderTerm)}
         </div>
       </div>
     );

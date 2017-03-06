@@ -54,7 +54,6 @@ export default {
           Redux.applyMiddleware.apply(null, middleware),
           DevTools.instrument(),
           batchedSubscribe(_.debounce(function(notify) {
-            console.log('notify()');
             notify();
           }, 0))
         );
@@ -63,7 +62,6 @@ export default {
       return Redux.compose(
         Redux.applyMiddleware.apply(null, middleware),
         batchedSubscribe(_.debounce(function(notify) {
-          console.log('notify()');
           notify();
         }, 0))
       );

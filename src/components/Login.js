@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import commonActions from './commonActions';
+import React, { Component } from 'react';``
 import { Alert, Button, Glyphicon, Image } from 'react-bootstrap';
 import { Link } from 'react-router';
 import PayloadStates from '../constants/PayloadStates';

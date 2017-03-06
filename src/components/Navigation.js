@@ -10,6 +10,33 @@ class Navigation extends Component {
 
   render() {
     const { loggedInUser } = this.context;
+    let navigation = null;
+
+    if (loggedInUser) {
+      navigation = (
+        <Nav pullRight>
+          <Navbar.Text>
+            You are currently logged in as <Image className="nav-avatar" src={'/avatars/' + loggedInUser.avatarUrl} />
+            {' '}
+            <strong>{loggedInUser.name}</strong>
+          </Navbar.Text>
+          <Navbar.Text>
+            {'{3}'} definitions
+          </Navbar.Text>
+          <LinkContainer to="/logout">
+            <NavItem eventKey={2}>Logout</NavItem>
+          </LinkContainer>
+        </Nav>
+      )
+    } else {
+      navigation = (
+        <Nav pullRight>
+          <LinkContainer to="/login">
+            <NavItem eventKey={2}>Login</NavItem>
+          </LinkContainer>
+        </Nav>
+      )
+    }
 
     return (
       <Navbar collapseOnSelect>
@@ -20,18 +47,7 @@ class Navigation extends Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav pullRight>
-            {loggedInUser && <Navbar.Text>
-              You are currently logged in as <Image className="nav-avatar" src={'/avatars/' + loggedInUser.avatarUrl} />
-              {' '}
-              <strong>{loggedInUser.name}</strong>
-            </Navbar.Text>}
-            {loggedInUser && <Navbar.Text>
-              {'{3}'} definitions
-            </Navbar.Text>}
-            {loggedInUser && <LinkContainer to="/logout"><NavItem eventKey={2}>Logout</NavItem></LinkContainer>}
-            {!loggedInUser && <LinkContainer to="/login"><NavItem eventKey={2}>Login</NavItem></LinkContainer>}
-          </Nav>
+          {navigation}
         </Navbar.Collapse>
       </Navbar>
     )
