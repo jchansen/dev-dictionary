@@ -2,14 +2,35 @@ import React, { Component } from 'react';
 import { Image, Nav, Navbar, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router';
+import auth from '../utils/auth';
 
+@lore.connect(function(getState, props) {
+  var user = null;
+
+  if (auth.hasToken()) {
+    user = JSON.parse(auth.getToken());
+  }
+
+  return {
+    definitions: user ? getState('definition.find', {
+      where: {
+        userId: user.id
+      }
+    }) : null
+  }
+})
 class Navigation extends Component {
   static contextTypes = {
     loggedInUser: React.PropTypes.object,
   };
 
+  static propTypes = {
+    definitions: React.PropTypes.object,
+  };
+
   render() {
     const { loggedInUser } = this.context;
+    const { definitions } = this.props;
     let navigation = null;
 
     if (loggedInUser) {
@@ -21,7 +42,7 @@ class Navigation extends Component {
             <strong>{loggedInUser.name}</strong>
           </Navbar.Text>
           <Navbar.Text>
-            {'{3}'} definitions
+            {'{' + definitions.data.length + '}'} definitions
           </Navbar.Text>
           <LinkContainer to="/logout">
             <NavItem eventKey={2}>Logout</NavItem>
