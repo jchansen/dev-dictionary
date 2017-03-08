@@ -6,6 +6,8 @@
   "main": "server.js",
   "keywords": [],
   "scripts": {
+    "server": "PORT=1337 babel-watch -L server.js",
+    "server:static": "json-server --watch db.json --port=1337",
     "start": "webpack-dev-server --history-api-fallback --env.dev --hot --port=3001",
     "build": "rm -rf dist; webpack --env.prod",
     "build:prod": "rm -rf dist; webpack --env.prod -p",
