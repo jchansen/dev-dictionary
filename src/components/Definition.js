@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DefinitionAuthor from './DefinitionAuthor';
 
 class Definition extends Component {
   static propTypes = {
@@ -10,13 +11,16 @@ class Definition extends Component {
     const { definition, index } = this.props;
 
     return (
-      <div className="definition">
-        <div className="definition-index">
-          {index}.
+      <div className="definition-container">
+        <div className="definition">
+          <div className="definition-index">
+            {index}.
+          </div>
+          <div className="definition-content">
+            {definition.data.content}
+          </div>
         </div>
-        <div className="definition-content">
-          {definition.data.content}
-        </div>
+        <DefinitionAuthor definition={definition} />
       </div>
     );
   }

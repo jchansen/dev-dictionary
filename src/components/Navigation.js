@@ -37,7 +37,7 @@ class Navigation extends Component {
       navigation = (
         <Nav pullRight>
           <Navbar.Text>
-            You are currently logged in as <Image className="nav-avatar" src={'/avatars/' + loggedInUser.avatarUrl} />
+            You are currently logged in as <Image className="nav-avatar" src={loggedInUser.avatarUrl} />
             {' '}
             <strong>{loggedInUser.name}</strong>
           </Navbar.Text>

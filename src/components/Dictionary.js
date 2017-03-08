@@ -3,10 +3,15 @@ import { Button, Glyphicon } from 'react-bootstrap';
 import Term from './Term';
 import AddTerm from './AddTerm';
 import PayloadStates from '../constants/PayloadStates';
+import LoadingSpinner from './LoadingSpinner';
 
 @lore.connect(function(getState, props) {
   return {
-    terms: getState('term.find')
+    terms: getState('term.find', {
+      pagination: {
+        _expand: 'user'
+      }
+    })
   }
 })
 class Dictionary extends Component {
@@ -38,7 +43,7 @@ class Dictionary extends Component {
         <div>
           <h2>Terms</h2>
           <div className="terms">
-            Fetching terms...
+            <LoadingSpinner message={`Loading terms...`} />
           </div>
         </div>
       );

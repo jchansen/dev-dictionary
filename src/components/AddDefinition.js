@@ -8,17 +8,17 @@ const options = [
   {
     "id": 1,
     "name": "Alice",
-    "avatarUrl": "/assets/avatars/alice.png"
+    "avatarUrl": "/assets/images/avatars/alice.png"
   },
   {
     "id": 2,
     "name": "Dilbert",
-    "avatarUrl": "/assets/avatars/dilbert.png"
+    "avatarUrl": "/assets/images/avatars/dilbert.png"
   },
   {
     "id": 3,
     "name": "Wally",
-    "avatarUrl": "/assets/avatars/wally.png"
+    "avatarUrl": "/assets/images/avatars/wally.png"
   }
 ];
 
@@ -26,7 +26,7 @@ const userComponent = props => {
   const value = props.value ? props.value : props.option;
   return (
     <div className="user-select-component" onClick={() => props.onSelect(value)}>
-      <Image className="nav-avatar" src={'/avatars/' + value.avatarUrl} />
+      <Image className="nav-avatar" src={value.avatarUrl} />
       {' '}
       <strong>{value.name}</strong>
     </div>
@@ -45,8 +45,6 @@ class AddDefinition extends Component {
   };
 
   createDefinition = (e) => {
-    // e.preventDefault();
-    // e.stopPropagation();
     lore.actions.definition.create({
       content: this.state.definition,
       termId: this.props.term.id,

@@ -3,6 +3,7 @@ import { Glyphicon } from 'react-bootstrap';
 import { Link } from 'react-router';
 import PayloadStates from '../constants/PayloadStates';
 import Term from './Term';
+import LoadingSpinner from './LoadingSpinner';
 
 @lore.connect(function(getState, props) {
   return {
@@ -31,7 +32,7 @@ class TermContainer extends Component {
     if (terms.state === PayloadStates.FETCHING) {
       return (
         <div className="term">
-          Fetching term...
+          <LoadingSpinner message={`Loading term...`} />
         </div>
       )
     }

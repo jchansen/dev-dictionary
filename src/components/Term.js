@@ -4,12 +4,18 @@ import Definition from './Definition';
 import AddDefinition from './AddDefinition';
 import { Link } from 'react-router';
 import PayloadStates from '../constants/PayloadStates';
+import LoadingSpinner from './LoadingSpinner';
+import TermAuthor from './TermAuthor';
 
 @lore.connect(function(getState, props) {
   return {
     definitions: getState('definition.find', {
       where: {
         termId: props.term.id
+      },
+      pagination: {
+        _expand: 'user',
+        // _expand: 'term'
       }
     })
   }
@@ -49,8 +55,9 @@ class Term extends Component {
               {term.data.name}
             </Link>
           </h3>
+          <TermAuthor term={term} />
           <div>
-            Loading definitions...
+            <LoadingSpinner message={`Loading definitions...`} />
           </div>
         </div>
       );
@@ -63,6 +70,7 @@ class Term extends Component {
             {term.data.name}
           </Link>
         </h3>
+        <TermAuthor term={term} />
         {definitions.data.map(this.renderDefinition)}
         <div className="add-definition-section">
           <Button bsStyle="info" bsSize="xsmall" onClick={this.toggleAdd}>
