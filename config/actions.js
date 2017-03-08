@@ -10,7 +10,7 @@ export default {
    * Specify whether models should be normalized.
    */
 
-  // normalize: true,
+  normalize: false,
 
   /**
    * Blueprints are used to provide models with a default set of actions for

@@ -1,5 +1,16 @@
 export default {
 
+  attributes: {
+    term: {
+      type: 'model',
+      model: 'term'
+    },
+    user: {
+      type: 'model',
+      model: 'user'
+    }
+  },
+
   properties: {
 
     /**
